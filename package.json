@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/vkhazin/product-svc/issues"
   },
-  "homepage": "https://github.com/vkhazin/product-svc#readme"
+  "homepage": "https://github.com/vkhazin/product-svc#readme",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "config": "^1.24.0",
+    "restify": "^4.3.0"
+  }
 }
