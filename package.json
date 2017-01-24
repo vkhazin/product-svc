@@ -1,0 +1,24 @@
+{
+  "name": "product-svc",
+  "version": "1.0.0",
+  "description": "Product Micro-Service",
+  "main": "restify-end-point.js",
+  "scripts": {
+    "test": "mocha ./test/restify-end-point.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vkhazin/product-svc.git"
+  },
+  "keywords": [
+    "node",
+    "node.js",
+    "nodejs"
+  ],
+  "author": "Vlad Khazin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vkhazin/product-svc/issues"
+  },
+  "homepage": "https://github.com/vkhazin/product-svc#readme"
+}
