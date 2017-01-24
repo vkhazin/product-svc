@@ -15,7 +15,7 @@
     "node.js",
     "nodejs"
   ],
-  "author": "Vlad Khazin",
+  "author": "Vlad Khazin <vlad.khazin@icssolutions.ca>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vkhazin/product-svc/issues"

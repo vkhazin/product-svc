@@ -1,11 +1,12 @@
 /*********************************************************************************
 Dependencies
 **********************************************************************************/
-var restify 	    = require('restify');
-var config 		    = require('config');
-var promise         = require('bluebird');
-var logger          = require('./logger').create(config);
-var core            = require('./core').create(config, logger);
+const restify 	        = require('restify');
+const config 		    = require('config');
+const promise           = require('bluebird');
+const logger            = require('./logger').create(config);
+const db                = {};
+const core              = require('./core').create(config, logger, db);
 /*********************************************************************************/
 
 /**********************************************************************************
@@ -42,8 +43,6 @@ End-points
 **********************************************************************************/
 //Echo
 server.get({path: routePrefix + '/echo', flags: 'i'}, echo);
-server.get({path: routePrefix, flags: 'i'}, echo);
-server.get({path: '/', flags: 'i'}, echo);
 server.get({path: '/echo', flags: 'i'}, echo);
 
 function echo(req, res, next) {
@@ -58,16 +57,15 @@ function echo(req, res, next) {
     next();
 }    
 
-//Demo end-point
-server.get({path: routePrefix + '/helloWorld', flags: 'i'}, helloWorld);
-server.get({path: routePrefix + '/helloWorld/:name', flags: 'i'}, helloWorld);
+//List
+server.get({path: routePrefix + '/', flags: 'i'}, getList);
+server.get({path: routePrefix + '/:offSet/:size', flags: 'i'}, getList);
 
-function helloWorld(req, res, next) {
-
-    someModule.helloWorld(req.params.name)
-        .then(function(result) {
+function getList(req, res, next) {
+    return core.getList(req.params.offSet, req.params.size)
+        .then(function(list) {
             //status: 200, body: json
-            res.send(result);     
+            res.send(list);     
         })
         .catch(function(err) {           
             //log raw error
