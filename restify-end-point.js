@@ -82,16 +82,20 @@ function getList(req, res, next) {
 //Single
 server.get({path: routePrefix + '/products/:id', flags: 'i'}, get);
 function get(req, res, next) {
-    return core.get(req.params.id)
+    return core.getDetails(req.params.id)
         .then(function(doc) {
             //status: 200, body: json
             res.send(doc);     
         })
-        .catch(function(err) {           
-            //log raw error
-            logger.error(err);
-            //Response with 500 error
-            res.send(new restify.errors.InternalServerError(util.inspect(err)));
+        .catch(function(err) {
+            if (err.status === 404) {
+                res.send(new restify.errors.NotFoundError('Sorry could find product with id: ' + req.params.id));
+            }  else {
+                //log raw error
+                logger.error(err);
+                //Response with 500 error
+                res.send(new restify.errors.InternalServerError(util.inspect(err)));
+            }
         })
         .done(function(){
             //processing has finished
