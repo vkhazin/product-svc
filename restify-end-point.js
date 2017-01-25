@@ -1,26 +1,28 @@
+'use strict';
 /*********************************************************************************
 Dependencies
 **********************************************************************************/
+const util              = require('util');
 const restify 	        = require('restify');
-const config 		    = require('config');
 const promise           = require('bluebird');
+const config 		    = require('config');
 const logger            = require('./logger').create(config);
-const db                = {};
+const db                = require('./repo-es').create(config, logger);
 const core              = require('./core').create(config, logger, db);
 /*********************************************************************************/
 
 /**********************************************************************************
 Configuration
 **********************************************************************************/
-var appInfo 		= require('./package.json');
-var port 			= process.env.PORT || 3000;
-var server 			= restify.createServer();
+const appInfo 		= require('./package.json');
+const port 			= process.env.PORT || 3000;
+const server 			= restify.createServer();
 /*********************************************************************************/
 
 /**********************************************************************************
 Constants
 **********************************************************************************/
-var routePrefix                     = '/v1';
+const routePrefix                     = '/v1';
 /*********************************************************************************/
 
 /**********************************************************************************
@@ -46,7 +48,7 @@ server.get({path: routePrefix + '/echo', flags: 'i'}, echo);
 server.get({path: '/echo', flags: 'i'}, echo);
 
 function echo(req, res, next) {
-    var info = {
+    const info = {
         name: appInfo.name,
         version: appInfo.version,
         description: appInfo.description,
@@ -58,11 +60,9 @@ function echo(req, res, next) {
 }    
 
 //List
-server.get({path: routePrefix + '/', flags: 'i'}, getList);
-server.get({path: routePrefix + '/:offSet/:size', flags: 'i'}, getList);
-
+server.get({path: routePrefix + '/products', flags: 'i'}, getList);
 function getList(req, res, next) {
-    return core.getList(req.params.offSet, req.params.size)
+    return core.getList(req.params.from, req.params.size)
         .then(function(list) {
             //status: 200, body: json
             res.send(list);     
@@ -70,8 +70,28 @@ function getList(req, res, next) {
         .catch(function(err) {           
             //log raw error
             logger.error(err);
-            //JSON.stringify unfortunately may fail when error has circular references
-            res.send(new restify.errors.InternalServerError(JSON.stringify(err)));
+            //Response with 500 error
+            res.send(new restify.errors.InternalServerError(util.inspect(err)));
+        })
+        .done(function(){
+            //processing has finished
+            next();
+        });
+};
+
+//Single
+server.get({path: routePrefix + '/products/:id', flags: 'i'}, get);
+function get(req, res, next) {
+    return core.get(req.params.id)
+        .then(function(doc) {
+            //status: 200, body: json
+            res.send(doc);     
+        })
+        .catch(function(err) {           
+            //log raw error
+            logger.error(err);
+            //Response with 500 error
+            res.send(new restify.errors.InternalServerError(util.inspect(err)));
         })
         .done(function(){
             //processing has finished

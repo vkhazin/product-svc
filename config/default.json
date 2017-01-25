@@ -1,5 +1,14 @@
 {
     "log": {
         "level": 2
-        }
+    },
+    "repository": "elasticSearch",
+    "elasticSearch": {
+        "urls": [
+            "http://192.168.99.100:32769/"
+        ],
+        "indexName": "products",
+        "typeName": "catalogue",
+        "defaultQuerySize": 100
+    }
 }

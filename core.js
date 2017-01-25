@@ -1,14 +1,13 @@
-const promise           = require('bluebird');
-
+'use strict';
 exports.create =  function (config, logger, db) {
 
     return (function () {
         return {
             getList: function (offSet, size) {
-                return promise.resolve([]);
+                return db.search(offSet, size);
             },
             getDetails: function (id) {
-                return promise.resolve({});
+                return db.get(id);
             }
         };
     }());
