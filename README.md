@@ -32,7 +32,7 @@ The only requirement is that I should be able to deploy it on premise and in the
 
 * On premises use [pm2](http://pm2.keymetrics.io/) to run the restify-end-point.js
 * On the cloud Aws Elastic BeansTalk, RedHat OpenShift, Heroku, and MS Azure - package.json has been configured to launch restify-end-point.js
-* To reduce hosting expenses AWS Lambda and Azure Functions can be used with an addition of a thin wrapper module to route calls into core.js
+* To reduce hosting expenses AWS Lambda with Api-Gateway and Azure Functions with Http Trigger can be used with an addition of a thin wrapper module to route calls into core.js
 * ElasticSearch back-end automation is a bit tricky: on premises a separate installation process will be required, on AWS and on Azure ElasticSearch can be used as a service, additionally third party hosted ElasticSearch can be used, such as Elastic Cloud, QBox, bonsai.io, and quite a few more.
 * It is feasible to pursue multi-repository and geo distributed data [approach](https://www.linkedin.com/pulse/dude-where-my-data-vlad-khazin?trk=mp-reader-card)
 
