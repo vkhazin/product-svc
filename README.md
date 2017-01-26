@@ -75,6 +75,7 @@ The only requirement is that I should be able to deploy it on premise and in the
 
 * In my mind there is no more internal calls vs. external calls - all calls mush be authorized by the service itself rather than relying of network protection
 * Security options outlined above should address the internal and external calls alike
+* Installing ElasticSearch locally: easiest option using docker and the [official image](https://hub.docker.com/_/elasticsearch/)
 * Calling the service for integration purposes can be done using JMeter, Postman, and simple curl, e.g.
 ```
 1. start the service by running "node restify-end-point.js" from terminal window in the project folder
