@@ -42,6 +42,7 @@ The only requirement is that I should be able to deploy it on premise and in the
 * On cloud use different hosts and load-balancers
 * On server-less platform a new host will be used to host new version
 * Data model backward compatibility will need to be taken in consideration
+* Version information could also be communicated over an http-header, but it implies a single entry point for all versions, not sure I favour that
 
 # Security #
 
