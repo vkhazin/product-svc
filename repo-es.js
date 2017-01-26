@@ -4,10 +4,10 @@ exports.create =  function (cnf, lgr) {
 	const promise 		= require('bluebird');
 	const elasticSearch	= null
 
-	var config 	= cnf;
-	var logger 	= lgr;
+	const config 	= cnf;
+	const logger 	= lgr;
 
-	var getClient = function() {
+	const getClient = function() {
 		if (!elasticSearch) {
 			var elasticSearch = new require('elasticsearch').Client({
 			  hosts: config.elasticSearch.urls

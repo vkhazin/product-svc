@@ -14,15 +14,9 @@ const core              = require('./core').create(config, logger, db);
 /**********************************************************************************
 Configuration
 **********************************************************************************/
-const appInfo 		= require('./package.json');
-const port 			= process.env.PORT || 3000;
+const appInfo 		    = require('./package.json');
+const port 			    = process.env.PORT || 3000;
 const server 			= restify.createServer();
-/*********************************************************************************/
-
-/**********************************************************************************
-Constants
-**********************************************************************************/
-const routePrefix                     = '/v1';
 /*********************************************************************************/
 
 /**********************************************************************************
@@ -44,9 +38,7 @@ server.use(restify.gzipResponse());
 End-points
 **********************************************************************************/
 //Echo
-server.get({path: routePrefix + '/echo', flags: 'i'}, echo);
 server.get({path: '/echo', flags: 'i'}, echo);
-
 function echo(req, res, next) {
     const info = {
         name: appInfo.name,
@@ -60,7 +52,7 @@ function echo(req, res, next) {
 }    
 
 //List
-server.get({path: routePrefix + '/products', flags: 'i'}, getList);
+server.get({path: '/products', flags: 'i'}, getList);
 function getList(req, res, next) {
     return core.getList(req.params.from, req.params.size)
         .then(function(list) {
@@ -80,7 +72,7 @@ function getList(req, res, next) {
 };
 
 //Single
-server.get({path: routePrefix + '/products/:id', flags: 'i'}, get);
+server.get({path: '/products/:id', flags: 'i'}, get);
 function get(req, res, next) {
     return core.getDetails(req.params.id)
         .then(function(doc) {

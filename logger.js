@@ -1,3 +1,4 @@
+'use strict';
 exports.create =  function (config) {
 
     if (config.log && config.log.level) {

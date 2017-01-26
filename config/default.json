@@ -5,7 +5,7 @@
     "repository": "elasticSearch",
     "elasticSearch": {
         "urls": [
-            "http://192.168.99.100:32769/"
+            "http://192.168.99.100:32777/"
         ],
         "indexName": "products",
         "typeName": "catalogue",
