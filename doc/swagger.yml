@@ -1,0 +1,82 @@
+---
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Product Service
+  description: |
+    #### Product Catalogue build with node.js, restify and ElasticSearch
+schemes:
+  - http
+host: localhost:3000
+basePath: /
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /echo:
+    get:
+      description: Returns basic info about the service
+      responses:
+        200:
+          description: Basic info json document
+  /products:
+    get:
+      description: Get json array of products
+      parameters:
+        - name: from
+          in: query
+          description: To retrieve products from a certain offset. Defaults to 0.
+          required: false
+          type: integer
+          format: int32
+        - name: size
+          in: query
+          description: To limit number of products to return. Defaults to service configuration (100).
+          required: false
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: array of products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/product'
+        500:
+          description: Returns 500 in case of unexpected error
+          
+  /products/{id}:
+    get:
+      description: Returns a product user based on a single {id}
+      parameters:
+        - name: id
+          in: path
+          description: id of product to retrieve
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: product document
+          schema:
+            $ref: '#/definitions/product'
+        404:
+          description: Returns 404 in case {id} is not found
+        500:
+          description: Returns 500 in case of unexpected error
+definitions:
+  product:
+    type: object
+    required:
+      - id
+      - name
+      - link
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+      link:
+        type: string
